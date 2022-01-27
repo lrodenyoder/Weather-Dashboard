@@ -65,3 +65,26 @@ header {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
+/* 5 DAY FORCAST STYLING */
+#five-day-container {
+    padding: 0;
+    margin-top: 8px;
+}
+
+.five-day-card {
+    background-color: #154c79;
+    color: white;
+    margin: 5px;
+}
+
+h3 {
+    font-size: 16px;
+    margin-top: 0.5rem;
+}
+
+@media screen and (max-width: 576px) {
+ .five-day-card {
+     width: 97%;
+ }
+}
