@@ -1,0 +1,9 @@
+* {
+    box-sizing: border-box;
+}
+
+header {
+    padding: 15px;
+    margin: 20px;
+    background-image: linear-gradient(to right, blue, purple)
+}

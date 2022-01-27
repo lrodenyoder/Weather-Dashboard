@@ -1,0 +1,1 @@
+//call city by name http://api.openweathermap.org/data/2.5/weather?=q[city name]&appid=bbd00506b478ea434ee9078c12cf9bc9
