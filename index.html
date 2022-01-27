@@ -9,8 +9,80 @@
     <title>Weather Dashboard</title>
 </head>
 <body>
-    
+    <header>Weather Dashboard</header>
 
+    <main>
+        <article class="left-block">
+            <div id="search-container">
+                <h1>Search For City</h1>
+                <form>
+                    <input type="text" name="search" placeholder="Enter City">
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+
+            <div id="history-container">
+                <!-- Delete all in this container. Will be dynamically generated -->
+                <div>
+                    <button data-city-id="0">City One</button>
+                    <button data-city-id="1">City Two</button>
+                    <button data-city-id="2">City Three</button>
+                </div>
+            </div>
+        </article>
+
+        <article class="right-block">
+            <div id="current-weather-container">
+                <h1>
+                    <span id="current-city">Current City</span>
+                    <span id="current-date">current date</span>
+                    <span id="current-icon">current icon</span>
+                </h1>
+                <!-- Delete all blow here. Will be dynamically generated -->
+                <ul>
+                    <li>Temp</li>
+                    <li>Wind Speed</li>
+                    <li>Humidity</li>
+                    <li>UV Index</li>
+                </ul>
+            </div>
+
+            <div id="five-day-container">
+                <h1>5-Day Forecast</h1>
+                <div id="five-day-card-wrapper">
+                    <!-- Delete all blow here. Will be dynamically generated -->
+                    <div id="day-one-card">
+                        <h2>Day One</h2>
+                        <ul>
+                            <li>icon</li>
+                            <li>temp</li>
+                            <li>wind speed</li>
+                            <li>humid</li>
+                        </ul>
+                    </div>
+                    <div id="day-two-card">
+                        <h2>Day Two</h2>
+                        <ul>
+                            <li>icon</li>
+                            <li>temp</li>
+                            <li>wind speed</li>
+                            <li>humid</li>
+                        </ul>
+                    </div>
+                    <div id="day-three-card">
+                        <h2>Day Three</h2>
+                        <ul>
+                            <li>icon</li>
+                            <li>temp</li>
+                            <li>wind speed</li>
+                            <li>humid</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+    </main>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="./assets/js/script.js"></script>
