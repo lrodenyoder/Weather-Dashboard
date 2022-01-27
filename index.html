@@ -22,8 +22,8 @@
                     <div class="card-head bg-white fw-bolder fs-4">Search For a City:</div>
 
                     <div class="card-block">
-                        <form>
-                            <input type="text" name="search" placeholder="Enter City" class="form-control">
+                        <form id="city-form">
+                            <input type="text" name="search" id="city" placeholder="Enter City" class="form-control">
                             <button class="btn btn-primary w-100" type="submit">Search</button>
                         </form>
                     </div>
@@ -44,7 +44,7 @@
                     <h2>
                         <p class="fw-bold">
                             <span id="current-city">Current City</span>
-                            (<span id="current-date">01/27/2022</span>)
+                            (<span id="current-date"> </span>)
                             <span id="current-icon">&#9748;</span>
                         </p>
                     </h2>
@@ -66,7 +66,7 @@
                     <div id="five-day-card-wrapper" class="row">
                         <!-- Delete all blow here. Will be dynamically generated -->
                         <div id="day-one-card" class="text-center col-sm col-md col-lg five-day-card">
-                            <h3>01/28/2022</h3>
+                            <h3 id="card-0"> </h3>
                             <ul class="future-weather-list list-unstyled">
                                 <li>&#9748;</li>
                                 <li>temp</li>
@@ -75,7 +75,7 @@
                             </ul>
                         </div>
                         <div id="day-two-card" class="text-center col-sm col-md col-lg five-day-card">
-                            <h3>01/29/2022</h3>
+                            <h3 id="card-1"> </h3>
                             <ul class="future-weather-list list-unstyled">
                                 <li>&#9748;</li>
                                 <li>temp</li>
@@ -84,7 +84,7 @@
                             </ul>
                         </div>
                         <div id="day-three-card" class="text-center col-sm col-md col-lg five-day-card">
-                            <h3>01/30/2022</h3>
+                            <h3 id="card-2"> </h3>
                             <ul class="future-weather-list list-unstyled">
                                 <li>&#9748;</li>
                                 <li>temp</li>
@@ -93,7 +93,7 @@
                             </ul>
                         </div>
                         <div id="day-four-card" class="text-center col-sm col-md col-lg five-day-card">
-                            <h3>01/31/2022</h3>
+                            <h3 id="card-3"> </h3>
                             <ul class="future-weather-list list-unstyled">
                                 <li>&#9748;</li>
                                 <li>temp</li>
@@ -102,7 +102,7 @@
                             </ul>
                         </div>
                         <div id="day-five-card" class="text-center col-sm col-md col-lg five-day-card">
-                            <h3>01/32/2022</h3>
+                            <h3 id="card-4"> </h3>
                             <ul class="future-weather-list list-unstyled">
                                 <li>&#9748;</li>
                                 <li>temp</li>
