@@ -66,6 +66,11 @@ header {
     margin-bottom: 10px;
 }
 
+#uvi-color {
+    padding: 1px 13px;
+    border-radius: 5px;
+}
+
 /* 5 DAY FORECAST STYLING */
 #five-day-container {
     padding: 0;
