@@ -39,18 +39,20 @@
         </article>
 
         <article class="right-block col-lg-8">
-            <div id="current-weather-container">
+            <div id="current-weather-container" class="border border-dark">
                 <h2>
+                    <p>
                     <span id="current-city">Current City</span>
-                    <span id="current-date">current date</span>
-                    <span id="current-icon">current icon</span>
+                    (<span id="current-date">01/27/2022</span>)
+                    <span id="current-icon">&#9748;</span>
+                    </p>
                 </h2>
                 <!-- Delete all blow here. Will be dynamically generated -->
-                <ul>
-                    <li>Temp</li>
-                    <li>Wind Speed</li>
-                    <li>Humidity</li>
-                    <li>UV Index</li>
+                <ul class="curr-weather-list list-unstyled" id="curr-weather-list">
+                    <li class="curr-weather-list-item" id="curr-temp">Temp</li>
+                    <li class="curr-weather-list-item" id="curr-wind">Wind Speed</li>
+                    <li class="curr-weather-list-item" id="curr-humid">Humidity</li>
+                    <li class="curr-weather-list-item" id="curr-UV">UV Index</li>
                 </ul>
             </div>
 
