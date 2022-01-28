@@ -1,8 +1,3 @@
-//call city by name http://api.openweathermap.org/data/2.5/weather?q=[city name]&appid=bbd00506b478ea434ee9078c12cf9bc9
-//call city by lat/lon https://api.openweathermap.org/data/2.5/onecall?lat=[lat]&lon=[lon]&appid=bbd00506b478ea434ee9078c12cf9bc9
-//get weather icons  http://openweathermap.org/img/wn/[icon]['optional sizing'@2x].png
-
-
 // VARIABLES
 var cityFormEl = document.getElementById("city-form");
 var cityNameInputEl = document.getElementById("city");
@@ -11,23 +6,9 @@ var weatherIcon = document.getElementById("today-weather");
 var displayCurrentCity = document.getElementById("current-city");
 var iconEl = document.getElementById("icon");
 var forecastWrapperEl = document.getElementById("five-day-card-wrapper");
-
 //display dates
 var currentDate = moment().format("L");
 var displayCurrentDate = document.getElementById("current-date");
-// var displayNextDay[] = document.getElementById("card-0");
-// displayNextDay1.textContent = moment().add(1, "day").format("L");
-// var displayNextDay2 = document.getElementById("card-1");
-// displayNextDay2.textContent = moment().add(2, "days").format("L");
-// var displayNextDay3 = document.getElementById("card-2");
-// displayNextDay3.textContent = moment().add(3, "days").format("L");
-// var displayNextDay4 = document.getElementById("card-3");
-// displayNextDay4.textContent = moment().add(4, "days").format("L");
-// var displayNextDay5 = document.getElementById("card-4");
-// displayNextDay5.textContent = moment().add(5, "days").format("L");
-
-
-
 
 
 //FUNCTIONS
