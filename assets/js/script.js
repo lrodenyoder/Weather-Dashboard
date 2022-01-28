@@ -8,6 +8,8 @@ var cityFormEl = document.getElementById("city-form");
 var cityNameInputEl = document.getElementById("city");
 var currentWeatherEl = document.getElementById("current-weather-list-container");
 var weatherIcon = document.getElementById("today-weather");
+var displayCurrentCity = document.getElementById("current-city");
+var iconEl = document.getElementById("icon");
 
 //display dates
 var currentDate = moment().format("L");
@@ -45,6 +47,8 @@ var getCityCoord = function (city) {
                     getWeatherData(cityLat, cityLon);
                 });
             } else {
+                displayCurrentCity.textContent = "";
+                displayCurrentDate.textContent = "";
                 alert("Error: City Not Found");
             }
         })
@@ -55,9 +59,6 @@ var getCityCoord = function (city) {
 
 //push lat and lon back to openweather to fetch weather data
 var getWeatherData = function (cityLat, cityLon) {
-    console.log(cityLat);
-    console.log(cityLon);
-    
     var weatherApiUrl =
         "https://api.openweathermap.org/data/2.5/onecall?lat=" + cityLat + "&lon=" + cityLon + "&units=imperial&appid=bbd00506b478ea434ee9078c12cf9bc9";
     
@@ -80,12 +81,8 @@ var getWeatherData = function (cityLat, cityLon) {
 };
 
 var displayWeather = function (weather) {
-    //clear old data
-    currentWeatherEl.textContent = "";
-
     //set weather icon
     var iconImg = weather.current.weather[0].icon;
-    var icon = document.createElement("img");
     icon.setAttribute(
         "src",
         "http://openweathermap.org/img/wn/" + iconImg + ".png"
@@ -158,17 +155,18 @@ var displayForecast = function (weather) {
 
 var formSubmitHandler = function (event) {
     event.preventDefault();
+    //remove old content
+    currentWeatherEl.textContent = "";
+    iconEl.removeAttribute("src");
+
     //get city name from user input
     var city = cityNameInputEl.value.trim().toUpperCase();
-    var displayCurrentCity = document.getElementById("current-city");
-
-    displayCurrentCity.textContent = city;
-    displayCurrentDate.textContent = "(" + currentDate + ")";
-
-
+    
     if (city) {
-        getCityCoord(city);
         cityNameInputEl.value = "";
+        displayCurrentCity.textContent = city;
+        displayCurrentDate.textContent = "(" + currentDate + ")";
+        getCityCoord(city);
         //FUNCTION TO ADD TO HISTORY CALLS HERE
     } else {
         alert("Please enter a valid city")
