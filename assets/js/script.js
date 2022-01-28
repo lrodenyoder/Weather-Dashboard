@@ -10,20 +10,21 @@ var currentWeatherEl = document.getElementById("current-weather-list-container")
 var weatherIcon = document.getElementById("today-weather");
 var displayCurrentCity = document.getElementById("current-city");
 var iconEl = document.getElementById("icon");
+var forecastWrapperEl = document.getElementById("five-day-card-wrapper");
 
 //display dates
 var currentDate = moment().format("L");
 var displayCurrentDate = document.getElementById("current-date");
-var displayNextDay1 = document.getElementById("card-0");
-displayNextDay1.textContent = moment().add(1, "day").format("L");
-var displayNextDay2 = document.getElementById("card-1");
-displayNextDay2.textContent = moment().add(2, "days").format("L");
-var displayNextDay3 = document.getElementById("card-2");
-displayNextDay3.textContent = moment().add(3, "days").format("L");
-var displayNextDay4 = document.getElementById("card-3");
-displayNextDay4.textContent = moment().add(4, "days").format("L");
-var displayNextDay5 = document.getElementById("card-4");
-displayNextDay5.textContent = moment().add(5, "days").format("L");
+// var displayNextDay[] = document.getElementById("card-0");
+// displayNextDay1.textContent = moment().add(1, "day").format("L");
+// var displayNextDay2 = document.getElementById("card-1");
+// displayNextDay2.textContent = moment().add(2, "days").format("L");
+// var displayNextDay3 = document.getElementById("card-2");
+// displayNextDay3.textContent = moment().add(3, "days").format("L");
+// var displayNextDay4 = document.getElementById("card-3");
+// displayNextDay4.textContent = moment().add(4, "days").format("L");
+// var displayNextDay5 = document.getElementById("card-4");
+// displayNextDay5.textContent = moment().add(5, "days").format("L");
 
 
 
@@ -68,9 +69,9 @@ var getWeatherData = function (cityLat, cityLon) {
             response.json()
                 .then(function (data) {
                     displayWeather(data);
-                    //displayForecast(data); ??
+                    displayForecast(data);
                 });
-          console.log(response);
+        //   console.log(response);
         } else {
           alert("Error: City Not Found");
         }
@@ -150,13 +151,63 @@ var displayWeather = function (weather) {
 };
 
 var displayForecast = function (weather) {
+    //loop through next 5 days to create forecast cards
+    for (var i = 0; i < 5; i++) {
+        // create card
+        var displayForecastCard = document.createElement("div");
+        displayForecastCard.id = "day-" + i + "-card";
+        displayForecastCard.classList = "text-center col-sm col-md col-lg five-day-card";
 
+        //create h3 with date
+        var displayForecastDateEl = document.createElement("h3");
+        displayForecastDateEl.id = "card-" + i;
+        displayForecastDateEl.textContent = moment().add(i + 1, "day").format("L");
+
+        //create list of weather info
+        var displayForecastList = document.createElement("ul");
+        displayForecastList.classList = "future-weather-list list-unstyled";
+
+        //create icon list item
+        var displayForecastIcon = document.createElement("li");
+        var imgEl = document.createElement("img");
+        var iconImg = weather.daily[i].weather[0].icon;
+        imgEl.setAttribute(
+          "src",
+          "http://openweathermap.org/img/wn/" + iconImg + ".png"
+        );
+        displayForecastIcon.appendChild(imgEl);
+        displayForecastList.appendChild(displayForecastIcon);
+
+        //create temp list item
+        var displayForecastTemp = document.createElement("li");
+        displayForecastTemp.classList = "forecast-list-item";
+        displayForecastTemp.textContent = "Temp: " + weather.daily[i].temp.day + "°F";
+        displayForecastList.appendChild(displayForecastTemp);
+
+        //create wind speed list item
+        var displayForecastWind = document.createElement("li");
+        displayForecastWind.classList = "forecast-list-item";
+        displayForecastWind.textContent = "Wind: " + weather.daily[i].wind_speed + " MPH";
+        displayForecastList.appendChild(displayForecastWind);
+
+        //create humidity list item
+        var displayForecastHumid = document.createElement("li");
+        displayForecastHumid.classList = "forecast-list-item";
+        displayForecastHumid.textContent = "Humidity: " + weather.daily[i].humidity + "%";
+        displayForecastList.appendChild(displayForecastHumid);
+
+
+        displayForecastCard.appendChild(displayForecastDateEl);
+        displayForecastCard.appendChild(displayForecastList);
+        forecastWrapperEl.appendChild(displayForecastCard);
+    }
 };
 
 var formSubmitHandler = function (event) {
     event.preventDefault();
     //remove old content
     currentWeatherEl.textContent = "";
+    forecastWrapperEl.textContent = "";
     iconEl.removeAttribute("src");
 
     //get city name from user input

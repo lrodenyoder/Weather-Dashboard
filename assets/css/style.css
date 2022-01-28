@@ -88,6 +88,11 @@ h3 {
     margin-top: 0.5rem;
 }
 
+.forecast-list-item {
+    font-size: 12px;
+    margin: 5px 0;
+}
+
 @media screen and (max-width: 576px) {
  .five-day-card {
      width: 97%;
