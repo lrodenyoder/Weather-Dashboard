@@ -215,7 +215,8 @@ var saveCityHistory = function () {
 
 var loadCityHistory = function () {
     var cityHistory = JSON.parse(localStorage.getItem("cityHistory"));
-    console.log(cityHistory);
+    //set cityHistoryArray to be localStorage
+    cityHistoryArray = cityHistory;
     
     //checks if localStorage is empty
     if (cityHistory) {
@@ -237,10 +238,12 @@ var createHistoryList = function (cityHistory) {
       var historyCity = document.createElement("button");
         historyCity.classList = "city-btn col-4 col-md-4 col-lg-12";
         historyCity.id = "city-btn";
-      historyCity.setAttribute("data-city-id", cityHistoryCounter);
-      historyCity.textContent = (sixCities[i]);
+        historyCity.setAttribute("data-city-id", i);
+        
+        historyCity.textContent = (sixCities[i]);
       
-      historyCityDiv.appendChild(historyCity);
+        historyCityDiv.appendChild(historyCity);
+        
     }
     historyContainerEl.appendChild(historyCityDiv);
 };
@@ -296,12 +299,6 @@ document.addEventListener("click", function (event) {
         return;
     }
 });
-
-var cityHistoryHandler = function (event) {
-    var city = event.target.getAttribute("city-btn");
-    console.log(city);
-}
-
 
 loadCityHistory();
 
