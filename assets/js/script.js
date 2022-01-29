@@ -1,4 +1,6 @@
 // VARIABLES
+var cityHistoryArray = [];
+var cityHistoryCounter = 0;
 var cityFormEl = document.getElementById("city-form");
 var cityNameInputEl = document.getElementById("city");
 var currentWeatherEl = document.getElementById("current-weather-list-container");
@@ -6,6 +8,7 @@ var weatherIcon = document.getElementById("today-weather");
 var displayCurrentCity = document.getElementById("current-city");
 var iconEl = document.getElementById("icon");
 var forecastWrapperEl = document.getElementById("five-day-card-wrapper");
+var historyContainerEl = document.getElementById("history-container");
 //display dates
 var currentDate = moment().format("L");
 var displayCurrentDate = document.getElementById("current-date");
@@ -184,6 +187,50 @@ var displayForecast = function (weather) {
     }
 };
 
+var saveCityHistory = function () {
+    //console.log(cityHistoryArray);
+    localStorage.setItem("cityHistory", JSON.stringify(cityHistoryArray));
+    createHistoryList(cityHistoryArray);
+};
+
+var loadCityHistory = function () {
+    var cityHistory = JSON.parse(localStorage.getItem("cityHistory"));
+    console.log(cityHistory);
+    debugger;
+    if (cityHistory) {
+        createHistoryList(cityHistory);
+    } else {
+        return;
+    }
+    //console.log(cityHistory);
+    //console.log(cityHistory.slice(0, 6));
+    //createHistoryList(cityHistory);
+};
+
+var createHistoryList = function (cityHistory) {
+    //console.log(cityHistory);
+    var sixCities = cityHistory.slice(0, 6);
+    console.log(sixCities);
+    debugger;
+
+    var historyCityDiv = document.createElement("div");
+    historyCityDiv.classList = "row";
+    
+    for(var i = 0; i < sixCities.length; i++) {
+
+      var historyCity = document.createElement("button");
+      historyCity.classList = "city-btn col-4 col-md-4 col-lg-12";
+      historyCity.setAttribute("data-city-id", cityHistoryCounter);
+      historyCity.textContent = (sixCities[i]);
+      console.log(sixCities[i]);
+
+      historyCityDiv.appendChild(historyCity);
+    }
+
+    historyContainerEl.appendChild(historyCityDiv);
+
+};
+
 var formSubmitHandler = function (event) {
     event.preventDefault();
     //remove old content
@@ -194,12 +241,16 @@ var formSubmitHandler = function (event) {
     //get city name from user input
     var city = cityNameInputEl.value.trim().toUpperCase();
     
+    //push city to array to be saved to local storage
+    cityHistoryArray.unshift(city);
+        
     if (city) {
         cityNameInputEl.value = "";
         displayCurrentCity.textContent = city;
         displayCurrentDate.textContent = "(" + currentDate + ")";
         getCityCoord(city);
-        //FUNCTION TO ADD TO HISTORY CALLS HERE
+        saveCityHistory();
+        // loadCityHistory(); ??
     } else {
         alert("Please enter a valid city")
     }
@@ -207,3 +258,5 @@ var formSubmitHandler = function (event) {
 
 //EVENT LISTENERS
 cityFormEl.addEventListener("submit", formSubmitHandler);
+
+loadCityHistory();
