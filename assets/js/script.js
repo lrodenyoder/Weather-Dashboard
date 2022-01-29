@@ -188,7 +188,6 @@ var displayForecast = function (weather) {
 };
 
 var saveCityHistory = function () {
-    //console.log(cityHistoryArray);
     localStorage.setItem("cityHistory", JSON.stringify(cityHistoryArray));
     createHistoryList(cityHistoryArray);
 };
@@ -196,39 +195,35 @@ var saveCityHistory = function () {
 var loadCityHistory = function () {
     var cityHistory = JSON.parse(localStorage.getItem("cityHistory"));
     console.log(cityHistory);
-    debugger;
+    
+    //checks if localStorage is empty
     if (cityHistory) {
         createHistoryList(cityHistory);
     } else {
         return;
     }
-    //console.log(cityHistory);
-    //console.log(cityHistory.slice(0, 6));
-    //createHistoryList(cityHistory);
 };
 
 var createHistoryList = function (cityHistory) {
-    //console.log(cityHistory);
+    //trims array to 6 most recent cities
     var sixCities = cityHistory.slice(0, 6);
-    console.log(sixCities);
-    debugger;
-
+    
     var historyCityDiv = document.createElement("div");
     historyCityDiv.classList = "row";
+    //debugger;
+    console.log(historyContainerEl);
     
-    for(var i = 0; i < sixCities.length; i++) {
-
+    //loops through array to create history buttons
+    for (var i = 0; i < sixCities.length; i++) {
       var historyCity = document.createElement("button");
       historyCity.classList = "city-btn col-4 col-md-4 col-lg-12";
       historyCity.setAttribute("data-city-id", cityHistoryCounter);
       historyCity.textContent = (sixCities[i]);
-      console.log(sixCities[i]);
-
+      
       historyCityDiv.appendChild(historyCity);
     }
 
     historyContainerEl.appendChild(historyCityDiv);
-
 };
 
 var formSubmitHandler = function (event) {
@@ -236,6 +231,7 @@ var formSubmitHandler = function (event) {
     //remove old content
     currentWeatherEl.textContent = "";
     forecastWrapperEl.textContent = "";
+    historyContainerEl.textContent = "";
     iconEl.removeAttribute("src");
 
     //get city name from user input
