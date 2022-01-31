@@ -15,7 +15,7 @@ var displayCurrentDate = document.getElementById("current-date");
 var getCityCoord = function (city) {
   //current weather with forecast requires to search by coordinates. this fetches coordinates from openweather to pass back to openweather to get current/future weather info
   var coordApiUrl =
-    "http://api.openweathermap.org/data/2.5/weather?q=" +
+    "https://api.openweathermap.org/data/2.5/weather?q=" +
     city +
     "&appid=bbd00506b478ea434ee9078c12cf9bc9";
 
