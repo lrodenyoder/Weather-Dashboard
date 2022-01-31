@@ -11,7 +11,6 @@ var displayCurrentCity = document.getElementById("current-city");
 var iconEl = document.getElementById("icon");
 var forecastWrapperEl = document.getElementById("five-day-card-wrapper");
 var historyContainerEl = document.getElementById("history-container");
-
 //display dates
 var currentDate = moment().format("L");
 var displayCurrentDate = document.getElementById("current-date");
@@ -35,9 +34,9 @@ var getCityCoord = function (city) {
                         displayCurrentDate.textContent =
                           "(" + currentDate + ")";
                         saveCityHistory();
-                    //get city latitude and longitude
-                    var cityLat = data.coord.lat;
-                    var cityLon = data.coord.lon;
+                        //get city latitude and longitude
+                        var cityLat = data.coord.lat;
+                        var cityLon = data.coord.lon;
                     
                         getWeatherData(cityLat, cityLon);
                         // return true;
@@ -53,18 +52,6 @@ var getCityCoord = function (city) {
         .catch(function (error) {
             alert("Unable to Connect to OpenWeather")
         });
-    
-    // if (city) {
-    //   //push city to array to be saved to local storage
-    //   cityHistoryArray.unshift(city);
-    //   cityNameInputEl.value = "";
-    //   displayCurrentCity.textContent = city;
-    //   displayCurrentDate.textContent = "(" + currentDate + ")";
-    //   saveCityHistory();
-    // } else {
-    //   alert("Please enter a valid city");
-    //   return;
-    // }
 };
 
 //push lat and lon back to openweather to fetch weather data
@@ -80,7 +67,6 @@ var getWeatherData = function (cityLat, cityLon) {
                     displayWeather(data);
                     displayForecast(data);
                 });
-        //   console.log(response);
         } else {
           alert("Error: City Not Found");
         }
@@ -91,7 +77,6 @@ var getWeatherData = function (cityLat, cityLon) {
 };
 
 var displayWeather = function (weather) {
-    //debugger;
     console.log(currentWeatherEl.textContent);
     if (currentWeatherEl.textContent == "") {
         //set weather icon
@@ -225,8 +210,6 @@ var displayForecast = function (weather) {
     } else {
         return;
     }
-    //debugger;
-    
 };
 
 var saveCityHistory = function () {
@@ -240,7 +223,6 @@ var loadCityHistory = function () {
     
     //checks if localStorage is empty
     if (cityHistory) {
-        //set cityHistoryArray to be localStorage
         cityHistoryArray = cityHistory;
         createHistoryList(cityHistory);
     } else {
@@ -280,21 +262,7 @@ var formSubmitHandler = function (event) {
     //get city name from user input
     var city = cityNameInputEl.value.trim().toUpperCase();
     
-    
-    console.log(city);
     getCityCoord(city);
-    
-    // if (city) {
-    //     //push city to array to be saved to local storage
-    //     cityHistoryArray.unshift(city);
-    //     cityNameInputEl.value = "";
-    //     displayCurrentCity.textContent = city;
-    //     displayCurrentDate.textContent = "(" + currentDate + ")";
-    //     saveCityHistory();
-    // } else {
-    //     alert("Please enter a valid city")
-    //     return;
-    // }
 };
 
 //EVENT LISTENERS
