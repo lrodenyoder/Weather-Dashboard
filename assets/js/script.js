@@ -28,21 +28,43 @@ var getCityCoord = function (city) {
             if (response.ok) {
                 response.json()
                     .then(function (data) {
+                        cityHistoryArray.unshift(city);
+                        historyContainerEl.textContent = "";
+                        cityNameInputEl.value = "";
+                        displayCurrentCity.textContent = city;
+                        displayCurrentDate.textContent =
+                          "(" + currentDate + ")";
+                        saveCityHistory();
                     //get city latitude and longitude
                     var cityLat = data.coord.lat;
                     var cityLon = data.coord.lon;
                     
-                    getWeatherData(cityLat, cityLon);
+                        getWeatherData(cityLat, cityLon);
+                        // return true;
                 });
             } else {
                 displayCurrentCity.textContent = "";
                 displayCurrentDate.textContent = "";
+                cityNameInputEl.value = "";
                 alert("Error: City Not Found");
+                return;
             }
         })
         .catch(function (error) {
             alert("Unable to Connect to OpenWeather")
         });
+    
+    // if (city) {
+    //   //push city to array to be saved to local storage
+    //   cityHistoryArray.unshift(city);
+    //   cityNameInputEl.value = "";
+    //   displayCurrentCity.textContent = city;
+    //   displayCurrentDate.textContent = "(" + currentDate + ")";
+    //   saveCityHistory();
+    // } else {
+    //   alert("Please enter a valid city");
+    //   return;
+    // }
 };
 
 //push lat and lon back to openweather to fetch weather data
@@ -253,24 +275,26 @@ var formSubmitHandler = function (event) {
     //remove old content
     currentWeatherEl.textContent = "";
     forecastWrapperEl.textContent = "";
-    historyContainerEl.textContent = "";
     iconEl.removeAttribute("src");
 
     //get city name from user input
     var city = cityNameInputEl.value.trim().toUpperCase();
     
-    //push city to array to be saved to local storage
-    cityHistoryArray.unshift(city);
-        
-    if (city) {
-        cityNameInputEl.value = "";
-        displayCurrentCity.textContent = city;
-        displayCurrentDate.textContent = "(" + currentDate + ")";
-        getCityCoord(city);
-        saveCityHistory();
-    } else {
-        alert("Please enter a valid city")
-    }
+    
+    console.log(city);
+    getCityCoord(city);
+    
+    // if (city) {
+    //     //push city to array to be saved to local storage
+    //     cityHistoryArray.unshift(city);
+    //     cityNameInputEl.value = "";
+    //     displayCurrentCity.textContent = city;
+    //     displayCurrentDate.textContent = "(" + currentDate + ")";
+    //     saveCityHistory();
+    // } else {
+    //     alert("Please enter a valid city")
+    //     return;
+    // }
 };
 
 //EVENT LISTENERS
