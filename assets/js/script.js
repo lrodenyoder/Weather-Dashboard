@@ -3,16 +3,12 @@ var cityHistoryArray = [];
 //containers
 var cityFormEl = document.getElementById("city-form");
 var cityNameInputEl = document.getElementById("city");
-var currentWeatherEl = document.getElementById(
-  "current-weather-list-container"
-);
+var currentWeatherEl = document.getElementById("current-weather-list-container");
 var weatherIcon = document.getElementById("today-weather");
 var displayCurrentCity = document.getElementById("current-city");
 var iconEl = document.getElementById("icon");
 var forecastWrapperEl = document.getElementById("five-day-card-wrapper");
 var historyContainerEl = document.getElementById("history-container");
-//display dates
-var currentDate = moment().format("L");
 var displayCurrentDate = document.getElementById("current-date");
 
 //FUNCTIONS
@@ -27,19 +23,19 @@ var getCityCoord = function (city) {
     .then(function (response) {
       if (response.ok) {
         response.json().then(function (data) {
-          console.log(data);
-          cityHistoryArray.unshift(city);
-          historyContainerEl.textContent = "";
-          cityNameInputEl.value = "";
-          displayCurrentCity.textContent = city;
-          saveCityHistory();
-          //get city latitude and longitude
-          var cityLat = data.coord.lat;
-          var cityLon = data.coord.lon;
+            //push verified city to history array
+            cityHistoryArray.unshift(city);
+              
+            historyContainerEl.textContent = "";
+            cityNameInputEl.value = "";
+            displayCurrentCity.textContent = city;
+            saveCityHistory();
 
-          getWeatherData(cityLat, cityLon);
+            //get city latitude and longitude
+            var cityLat = data.coord.lat;
+            var cityLon = data.coord.lon;
+            getWeatherData(cityLat, cityLon);
         });
-        return true;
       } else {
         displayCurrentCity.textContent = "";
         displayCurrentDate.textContent = "";
@@ -47,7 +43,6 @@ var getCityCoord = function (city) {
 
         alert("Error: City Not Found");
       }
-      return false;
     })
     .catch(function (error) {
       alert("Unable to Connect to OpenWeather");
@@ -67,9 +62,9 @@ var getWeatherData = function (cityLat, cityLon) {
     .then(function (response) {
       if (response.ok) {
         response.json().then(function (data) {
-          console.log(data.timezone);
           localTimeZone = data.timezone;
-          currentDate = moment.utc().tz(localTimeZone).format("L");
+          //use moment timezones to get local date for city
+          var currentDate = moment.utc().tz(localTimeZone).format("L");
           displayCurrentDate.textContent = "(" + currentDate + ")";
 
           displayWeather(data);
@@ -112,8 +107,7 @@ var displayWeather = function (weather) {
     var windSpeedLi = document.createElement("li");
     windSpeedLi.classList = "curr-weather-list-item";
     windSpeedLi.id = "curr-wind";
-    windSpeedLi.textContent =
-      "Wind Speed: " + weather.current.wind_speed + " MPH";
+    windSpeedLi.textContent = "Wind Speed: " + weather.current.wind_speed + " MPH";
 
     weatherList.appendChild(windSpeedLi);
 
@@ -165,14 +159,13 @@ var displayForecast = function (weather) {
       // create card
       var displayForecastCard = document.createElement("div");
       displayForecastCard.id = "day-" + i + "-card";
-      displayForecastCard.classList =
-        "text-center col-sm col-md col-lg five-day-card";
+      displayForecastCard.classList = "text-center col-sm col-md col-lg five-day-card";
 
       //create h3 with date
       var displayForecastDateEl = document.createElement("h3");
       displayForecastDateEl.id = "card-" + i;
       localTimeZone = weather.timezone;
-      console.log(localTimeZone);
+      //use moment timezones to get local date for city
       displayForecastDateEl.textContent = moment
         .utc()
         .add(i + 1, "day")
@@ -187,32 +180,26 @@ var displayForecast = function (weather) {
       var displayForecastIcon = document.createElement("li");
       var imgEl = document.createElement("img");
       var iconImg = weather.daily[i].weather[0].icon;
-      imgEl.setAttribute(
-        "src",
-        "http://openweathermap.org/img/wn/" + iconImg + ".png"
-      );
+      imgEl.setAttribute("src", "http://openweathermap.org/img/wn/" + iconImg + ".png");
       displayForecastIcon.appendChild(imgEl);
       displayForecastList.appendChild(displayForecastIcon);
 
       //create temp list item
       var displayForecastTemp = document.createElement("li");
       displayForecastTemp.classList = "forecast-list-item";
-      displayForecastTemp.textContent =
-        "Temp: " + weather.daily[i].temp.day + "°F";
+      displayForecastTemp.textContent = "Temp: " + weather.daily[i].temp.day + "°F";
       displayForecastList.appendChild(displayForecastTemp);
 
       //create wind speed list item
       var displayForecastWind = document.createElement("li");
       displayForecastWind.classList = "forecast-list-item";
-      displayForecastWind.textContent =
-        "Wind: " + weather.daily[i].wind_speed + " MPH";
+      displayForecastWind.textContent = "Wind: " + weather.daily[i].wind_speed + " MPH";
       displayForecastList.appendChild(displayForecastWind);
 
       //create humidity list item
       var displayForecastHumid = document.createElement("li");
       displayForecastHumid.classList = "forecast-list-item";
-      displayForecastHumid.textContent =
-        "Humidity: " + weather.daily[i].humidity + "%";
+      displayForecastHumid.textContent = "Humidity: " + weather.daily[i].humidity + "%";
       displayForecastList.appendChild(displayForecastHumid);
 
       displayForecastCard.appendChild(displayForecastDateEl);
@@ -280,7 +267,6 @@ cityFormEl.addEventListener("submit", formSubmitHandler);
 document.addEventListener("click", function (event) {
   if (event.target && event.target.id == "city-btn") {
     var city = event.target.textContent;
-    console.log(city);
 
     if (city == "" || city == null || city == undefined) {
       alert("Please enter a valid city");
@@ -292,7 +278,6 @@ document.addEventListener("click", function (event) {
       historyContainerEl.textContent = "";
       cityNameInputEl.value = "";
       displayCurrentCity.textContent = city;
-      //displayCurrentDate.textContent = "(" + currentDate + ")";
       getCityCoord(city);
     }
   } else {
