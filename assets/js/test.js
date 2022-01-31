@@ -21,29 +21,15 @@ var getCityCoord = function (city) {
     city +
         "&appid=bbd00506b478ea434ee9078c12cf9bc9";
     
-    //   if (getCityCoord(city) == undefined || getCityCoord(city) == null) {
-    //     alert("Please enter a valid city");
-    //     return;
-    //   } else {
-    //     cityNameInputEl.value = "";
-    //     displayCurrentCity.textContent = city;
-    //     displayCurrentDate.textContent = "(" + currentDate + ")";
-    //     saveCityHistory();
-    //   }
-    
-    
-
-  fetch(coordApiUrl)
+    fetch(coordApiUrl)
     .then(function (response) {
       if (response.ok) {
           response.json().then(function (data) {
-              console.log(city);
+              console.log(data);
               cityHistoryArray.unshift(city);
-              console.log(cityHistoryArray);
                 historyContainerEl.textContent = "";
               cityNameInputEl.value = "";
               displayCurrentCity.textContent = city;
-              displayCurrentDate.textContent = "(" + currentDate + ")";
               saveCityHistory();
           //get city latitude and longitude
           var cityLat = data.coord.lat;
@@ -54,7 +40,9 @@ var getCityCoord = function (city) {
           return true;
       } else {
         displayCurrentCity.textContent = "";
-        displayCurrentDate.textContent = "";
+          displayCurrentDate.textContent = "";
+              cityNameInputEl.value = "";
+          
         alert("Error: City Not Found");
         }
         return false;
@@ -76,11 +64,16 @@ var getWeatherData = function (cityLat, cityLon) {
   fetch(weatherApiUrl)
     .then(function (response) {
       if (response.ok) {
-        response.json().then(function (data) {
+          response.json().then(function (data) {
+              console.log(data.timezone)
+                localTimeZone = data.timezone;
+              currentDate = moment.utc().tz(localTimeZone).format("L");
+                displayCurrentDate.textContent = "(" + currentDate + ")";
+              
+            
           displayWeather(data);
           displayForecast(data);
         });
-        //   console.log(response);
       } else {
         alert("Error: City Not Found");
       }
@@ -176,10 +169,14 @@ var displayForecast = function (weather) {
 
       //create h3 with date
       var displayForecastDateEl = document.createElement("h3");
-      displayForecastDateEl.id = "card-" + i;
-      displayForecastDateEl.textContent = moment()
-        .add(i + 1, "day")
-        .format("L");
+        displayForecastDateEl.id = "card-" + i;
+        localTimeZone = weather.timezone;
+        console.log(localTimeZone);
+        displayForecastDateEl.textContent = moment
+          .utc()
+          .add(i + 1, "day")
+          .tz(localTimeZone)
+          .format("L");
 
       //create list of weather info
       var displayForecastList = document.createElement("ul");
@@ -270,26 +267,11 @@ var formSubmitHandler = function (event) {
   //remove old content
   currentWeatherEl.textContent = "";
   forecastWrapperEl.textContent = "";
-  //historyContainerEl.textContent = "";
   iconEl.removeAttribute("src");
 
   //get city name from user input
   var city = cityNameInputEl.value.trim().toUpperCase();
-
     getCityCoord(city);
-  
-  //push city to array to be saved to local storage
-//   cityHistoryArray.unshift(city);
-    
-//   if (getCityCoord(city) == undefined || getCityCoord(city) == null) {
-//       alert("Please enter a valid city");
-//       return;
-// } else {
-//     cityNameInputEl.value = "";
-//     displayCurrentCity.textContent = city;
-//     displayCurrentDate.textContent = "(" + currentDate + ")";
-//     saveCityHistory();
-//   }
 };
 
 //EVENT LISTENERS
@@ -303,16 +285,14 @@ document.addEventListener("click", function (event) {
         alert("Please enter a valid city");
         return;
     } else {
-        //cityHistoryArray.unshift(city);
         currentWeatherEl.textContent = "";
         forecastWrapperEl.textContent = "";
           iconEl.removeAttribute("src");
         historyContainerEl.textContent = "";
       cityNameInputEl.value = "";
       displayCurrentCity.textContent = city;
-      displayCurrentDate.textContent = "(" + currentDate + ")";
+      //displayCurrentDate.textContent = "(" + currentDate + ")";
       getCityCoord(city);
-      //saveCityHistory();
     }
   } else {
     return;
@@ -320,5 +300,3 @@ document.addEventListener("click", function (event) {
 });
 
 loadCityHistory();
-
-//TO DO: GET LOCAL TIME FROM LOCAL TIME ZONES. EG: TOKYO IS 9 HOURS AHEAD, DATES CAN BE DIFFERENT
