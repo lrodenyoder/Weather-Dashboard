@@ -8,7 +8,7 @@
 
 ## Description
 
-
+This dashboard is designed to present current weather data and also a five day forecast for a city searched by a user. The weather data is provided by OpenWeather API. The user is also able to see their last six cities that were searched and when clicked, the data for that city displays again. 
 
 ## Weather Dashboard
 [Click Here](https://lrodenyoder.github.io/Weather-Dashboard/) to go to the dashboard.
