@@ -215,11 +215,11 @@ var saveCityHistory = function () {
 
 var loadCityHistory = function () {
     var cityHistory = JSON.parse(localStorage.getItem("cityHistory"));
-    //set cityHistoryArray to be localStorage
-    cityHistoryArray = cityHistory;
     
     //checks if localStorage is empty
     if (cityHistory) {
+        //set cityHistoryArray to be localStorage
+        cityHistoryArray = cityHistory;
         createHistoryList(cityHistory);
     } else {
         return;
