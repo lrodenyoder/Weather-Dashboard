@@ -1,6 +1,7 @@
+
+
 // VARIABLES
 var cityHistoryArray = [];
-console.log(cityHistoryArray);
 var cityHistoryCounter = 0;
 //containers
 var cityFormEl = document.getElementById("city-form");
@@ -27,13 +28,16 @@ var getCityCoord = function (city) {
             if (response.ok) {
                 response.json()
                     .then(function (data) {
-                        cityHistoryArray.unshift(city);
-                        historyContainerEl.textContent = "";
-                        cityNameInputEl.value = "";
-                        displayCurrentCity.textContent = city;
-                        displayCurrentDate.textContent =
-                          "(" + currentDate + ")";
-                        saveCityHistory();
+                         cityHistoryArray.unshift(city);
+                        // console.log(data);
+                        // localTimeZone = data.timezone;
+                        // console.log(localTimeZone / 60);
+                        // historyContainerEl.textContent = "";
+                        // cityNameInputEl.value = "";
+                         displayCurrentCity.textContent = city;
+                        // displayCurrentDate.textContent =
+                        //   "(" + currentDate + ")";
+                        // saveCityHistory();
                         //get city latitude and longitude
                         var cityLat = data.coord.lat;
                         var cityLon = data.coord.lon;
@@ -64,6 +68,20 @@ var getWeatherData = function (cityLat, cityLon) {
         if (response.ok) {
             response.json()
                 .then(function (data) {
+                //cityHistoryArray.unshift(city);
+                //console.log(data);
+                localTimeZone = data.timezone;
+                //console.log(data.timezone);
+                currentDate = moment.utc().tz(localTimeZone).format("L");
+                //console.log(currentDate);
+                historyContainerEl.textContent = "";
+                cityNameInputEl.value = "";
+                // displayCurrentCity.textContent = city;
+                displayCurrentDate.textContent = "(" + currentDate + ")";
+                saveCityHistory();
+
+
+
                     displayWeather(data);
                     displayForecast(data);
                 });
@@ -77,7 +95,6 @@ var getWeatherData = function (cityLat, cityLon) {
 };
 
 var displayWeather = function (weather) {
-    console.log(currentWeatherEl.textContent);
     if (currentWeatherEl.textContent == "") {
         //set weather icon
         var iconImg = weather.current.weather[0].icon;
@@ -164,8 +181,10 @@ var displayForecast = function (weather) {
             var displayForecastDateEl = document.createElement("h3");
             displayForecastDateEl.id = "card-" + i;
             displayForecastDateEl.textContent = moment()
-                .add(i + 1, "day")
-                .format("L");
+              .utc()
+              .tz(localTimeZone)
+              .add(i + 1, "day")
+              .format("L");
 
             //create list of weather info
             var displayForecastList = document.createElement("ul");
@@ -270,7 +289,6 @@ cityFormEl.addEventListener("submit", formSubmitHandler);
 document.addEventListener("click", function (event) {
     if (event.target && event.target.id == "city-btn") {
         var city = event.target.textContent;
-        console.log(city);
         getCityCoord(city);
         currentWeatherEl.textContent = "";
         forecastWrapperEl.textContent = "";
